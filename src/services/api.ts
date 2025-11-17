@@ -3,7 +3,7 @@ import axios from "axios";
 import { getAccessToken, getRefreshToken, setTokens, clearAuth } from "./authService";
 
 const api = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
 // Attach token

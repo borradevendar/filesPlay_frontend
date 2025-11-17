@@ -1,24 +1,47 @@
 // src/pages/AuthCallback.tsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 import { setTokens } from "../services/authService";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
 
-  useEffect(() => {     
-    const url = new URL(window.location.href);
+  useEffect(() => {
+    async function handleAuth() {
+      const url = new URL(window.location.href);
 
-    const accessToken = url.searchParams.get("accessToken");
-    const refreshToken = url.searchParams.get("refreshToken");
-    const user = url.searchParams.get("user");
+      const access = url.searchParams.get("access");
+      const refresh = url.searchParams.get("refresh");
 
-    if (accessToken && refreshToken && user) {
-      setTokens({ accessToken, refreshToken, user: JSON.parse(user) });
-      navigate("/dashboard");
-    } else {
-      navigate("/");
+      if (!access) {
+        navigate("/");
+        return;
+      }
+
+      // temporary save
+      localStorage.setItem("accessToken", access);
+      localStorage.setItem("refreshToken", refresh || "");
+
+      try {
+        // Fetch user profile using token
+        const res = await api.get("/auth/profile");
+
+        const user = res.data;
+
+        setTokens({
+          accessToken: access,
+          refreshToken: refresh || "",
+          user,
+        });
+
+        navigate("/dashboard");
+      } catch {
+        navigate("/");
+      }
     }
+
+    handleAuth();
   }, []);
 
   return <p>Processing login...</p>;
