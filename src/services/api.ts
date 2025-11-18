@@ -27,7 +27,7 @@ api.interceptors.response.use(
         return;
       }
 
-      const res = await axios.post("http://localhost:4000/auth/refresh", {
+      const res = await axios.post("https://filesplaybackend-production.up.railway.app/auth/refresh", {
         userId: user.id,
         refreshToken,
       });
