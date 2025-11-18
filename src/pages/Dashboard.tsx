@@ -1,18 +1,203 @@
 // src/pages/Dashboard.tsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import api from "../services/api";
+import { getUser } from "../services/authService";
 
 export default function Dashboard() {
   const [profile, setProfile] = useState<any>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [dragActive, setDragActive] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     api.get("/auth/profile").then((res) => setProfile(res.data));
   }, []);
 
+  const handleBrowse = () => inputRef.current?.click();
+
+  const handleFileSelect = (e: any) => {
+    const f = e.target.files[0];
+    if (f) {
+      setFile(f);
+      setError("");
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragActive(false);
+    const f = e.dataTransfer.files[0];
+    if (f) {
+      setFile(f);
+      setError("");
+    }
+  };
+
+  const uploadFile = async () => {
+    if (!file) return setError("Please select a file first.");
+
+    setUploading(true);
+    setError("");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await api.post("/files/convert", formData, {
+        responseType: "blob", // backend returns PDF
+      });
+
+      // Create PDF blob URL
+      const pdfBlob = new Blob([res.data], { type: "application/pdf" });
+      const pdfUrl = window.URL.createObjectURL(pdfBlob);
+
+      // Trigger download
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = `${file.name.replace(/\.[^/.]+$/, "")}.pdf`;
+      link.click();
+
+    } catch (err) {
+      setError("Conversion failed. Try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
-    <div style={{ padding: 40 }}>
-      <h1>Dashboard</h1>
-      <pre>{JSON.stringify(profile, null, 2)}</pre>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#f7f9fc",
+        padding: "40px 20px",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 600,
+          background: "white",
+          padding: 40,
+          borderRadius: 16,
+          boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
+        }}
+      >
+        {/* Profile Header */}
+        {profile && (
+          <div style={{ display: "flex", alignItems: "center", marginBottom: 30 }}>
+            {profile.avatarUrl ? (
+              <img
+                src={profile.avatarUrl}
+                style={{ width: 60, height: 60, borderRadius: "50%" }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: "50%",
+                  background: "#ddd",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 24,
+                }}
+              >
+                {profile?.email?.charAt(0) || "?"}
+              </div>
+            )}
+            <div style={{ marginLeft: 16 }}>
+              <h2 style={{ margin: 0, fontSize: 22, color: "#111" }}>
+                Welcome, {profile.name}
+              </h2>
+              <p style={{ margin: 0, color: "#666" }}>{profile.email}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Upload Card */}
+        <div>
+          <h3 style={{ fontSize: 20, marginBottom: 16, color: "#222" }}>
+            Convert Word → PDF
+          </h3>
+
+          {/* Drag & Drop box */}
+          <div
+            onDragEnter={() => setDragActive(true)}
+            onDragOver={(e) => e.preventDefault()}
+            onDragLeave={() => setDragActive(false)}
+            onDrop={handleDrop}
+            onClick={handleBrowse}
+            style={{
+              border: "2px dashed #cbd5e1",
+              padding: 40,
+              textAlign: "center",
+              borderRadius: 14,
+              background: dragActive ? "#f1f5f9" : "#f8fafc",
+              transition: "0.2s",
+              cursor: "pointer",
+            }}
+          >
+            <p style={{ fontSize: 16, color: "#475569" }}>
+              {dragActive ? "Drop your file here" : "Drag & drop your Word file here"}
+            </p>
+            <p style={{ color: "#94a3b8", fontSize: 14 }}>or click to browse</p>
+
+            <input
+              type="file"
+              accept=".doc,.docx"
+              ref={inputRef}
+              onChange={handleFileSelect}
+              style={{ display: "none" }}
+            />
+          </div>
+
+          {/* Selected File */}
+          {file && (
+            <div
+              style={{
+                marginTop: 20,
+                padding: 14,
+                background: "#f1f5f9",
+                borderRadius: 8,
+                fontSize: 15,
+                color: "#1e293b",
+              }}
+            >
+              {file.name} ({Math.round(file.size / 1024)} KB)
+            </div>
+          )}
+
+          {/* Error */}
+          {error && (
+            <p style={{ color: "red", marginTop: 10 }}>{error}</p>
+          )}
+
+          {/* Convert Button */}
+          <button
+            onClick={uploadFile}
+            disabled={uploading}
+            style={{
+              marginTop: 22,
+              width: "100%",
+              padding: "14px 0",
+              background: uploading ? "#94a3b8" : "#2563eb",
+              color: "white",
+              fontSize: 16,
+              border: "none",
+              borderRadius: 10,
+              cursor: uploading ? "not-allowed" : "pointer",
+              transition: "0.2s",
+            }}
+          >
+            {uploading ? "Converting..." : "Convert to PDF"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
