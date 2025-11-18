@@ -69,7 +69,7 @@ export default function Dashboard() {
   return (
     <div
       style={{
-        minHeight: "100vh",
+        minHeight: "70vh",
         background: "#f7f9fc",
         padding: "40px 20px",
         display: "flex",

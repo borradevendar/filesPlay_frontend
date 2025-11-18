@@ -1,27 +1,67 @@
-// src/pages/About.tsx
 export default function About() {
   return (
-    <div className="p-8 max-w-3xl mx-auto text-gray-800">
-      <h1 className="text-3xl font-bold mb-4">About FilesPlay</h1>
+    <div
+      style={{
+        maxWidth: "720px",
+        margin: "0 auto",
+        padding: "40px 24px",
+        color: "#1F2937",
+        lineHeight: 1.7,
+      }}
+    >
+      {/* Header */}
+      <h1
+        style={{
+          fontSize: "32px",
+          fontWeight: 700,
+          marginBottom: "16px",
+          background: "linear-gradient(to right, #2563EB, #3B82F6)",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+        }}
+      >
+        About FilesPlay
+      </h1>
 
-      <p className="mb-4">
-        FilesPlay is a modern, fast and free file-conversion platform built to help 
-        users quickly convert documents with maximum privacy and simplicity.
-      </p>
+      {/* Description Card */}
+      <div
+        style={{
+          background: "white",
+          padding: "24px",
+          borderRadius: "16px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+          border: "1px solid #E5E7EB",
+        }}
+      >
+        <p style={{ marginBottom: "16px", fontSize: "16px" }}>
+          <strong>FilesPlay</strong> is a modern, fast, and free file conversion tool
+          designed to make your workflow simple and stress-free. Upload a file,
+          hit convert, download — that’s it.
+        </p>
 
-      <p className="mb-4">
-        We believe tools shouldn't be locked behind paywalls or intrusive ads. 
-        Our goal is to provide a clean and accessible experience for everyone.
-      </p>
+        <p style={{ marginBottom: "16px", fontSize: "16px" }}>
+          We believe essential tools should be open, accessible, and reliable —
+          without paywalls, or complicated interfaces.
+        </p>
 
-      <p className="mb-4">
-        Currently, FilesPlay supports converting Word documents to PDF, with many 
-        more file formats planned for the future.
-      </p>
+        <p style={{ marginBottom: "16px", fontSize: "16px" }}>
+          Today, FilesPlay supports converting <strong>Word → PDF</strong>.
+          In upcoming releases, we plan to add more document and media formats.
+        </p>
 
-      <p className="mt-6 font-semibold">
-        Thank you for using FilesPlay!
-      </p>
+        <p
+          style={{
+            marginTop: "24px",
+            fontWeight: 600,
+            fontSize: "17px",
+            color: "#374151",
+          }}
+        >
+          Thank you for using FilesPlay ❤️  
+          <br />
+          We’re just getting started.
+        </p>
+      </div>
     </div>
   );
 }
