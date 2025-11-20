@@ -1,9 +1,13 @@
-// src/utils/ProtectedRoute.tsx
+import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { getAccessToken } from "../services/authService";
+import { AuthContext } from "../context/AuthContext";
 
 export default function ProtectedRoute({ children }: any) {
-  const token = getAccessToken();
-  if (!token) return <Navigate to="/" replace />;
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) return <p>Loading...</p>;
+
+  if (!user) return <Navigate to="/" />;
+
   return children;
 }

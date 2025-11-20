@@ -69,7 +69,6 @@ export default function Dashboard() {
   return (
     <div
       style={{
-        minHeight: "70vh",
         background: "#f7f9fc",
         padding: "40px 20px",
         display: "flex",
@@ -111,19 +110,23 @@ export default function Dashboard() {
               </div>
             )}
             <div style={{ marginLeft: 16 }}>
-              <h2 style={{ margin: 0, fontSize: 22, color: "#111" }}>
+              <p style={{ margin: 0, fontSize: 16, color: "#111" }}>
                 Welcome, {profile.name}
-              </h2>
-              <p style={{ margin: 0, color: "#666" }}>{profile.email}</p>
+              </p>
             </div>
-          </div>
+          </div>  
         )}
 
         {/* Upload Card */}
         <div>
-          <h3 style={{ fontSize: 20, marginBottom: 16, color: "#222" }}>
-            Convert Word → PDF
-          </h3>
+          <h1 style={{
+          fontSize: "32px",
+          fontWeight: 700,
+          marginBottom: "8px",
+          WebkitBackgroundClip: "text",
+          color: "#1F2937",
+        }}>WORD to PDF Converter</h1>
+          <p style={{fontSize: "14px", marginBottom: "12px"}}>Convert your WORD documents to PDF files with incredible accuracy.</p>
 
           {/* Drag & Drop box */}
           <div
@@ -134,7 +137,7 @@ export default function Dashboard() {
             onClick={handleBrowse}
             style={{
               border: "2px dashed #cbd5e1",
-              padding: 40,
+              padding: 50,
               textAlign: "center",
               borderRadius: 14,
               background: dragActive ? "#f1f5f9" : "#f8fafc",
@@ -185,7 +188,7 @@ export default function Dashboard() {
               marginTop: 22,
               width: "100%",
               padding: "14px 0",
-              background: uploading ? "#94a3b8" : "#2563eb",
+              background: "#000000",
               color: "white",
               fontSize: 16,
               border: "none",

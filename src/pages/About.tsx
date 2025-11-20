@@ -15,12 +15,10 @@ export default function About() {
           fontSize: "32px",
           fontWeight: 700,
           marginBottom: "16px",
-          background: "linear-gradient(to right, #2563EB, #3B82F6)",
           WebkitBackgroundClip: "text",
-          color: "transparent",
         }}
       >
-        About FilesPlay
+        About Files Play
       </h1>
 
       {/* Description Card */}

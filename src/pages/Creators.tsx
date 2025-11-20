@@ -15,9 +15,9 @@ export default function Creators() {
           fontSize: "32px",
           fontWeight: 700,
           marginBottom: "20px",
-          background: "linear-gradient(to right, #F59E0B, #FBBF24)",
+          // background: "linear-gradient(to right, #F59E0B, #FBBF24)",
           WebkitBackgroundClip: "text",
-          color: "transparent",
+          // color: "transparent",
         }}
       >
         Meet the Creator

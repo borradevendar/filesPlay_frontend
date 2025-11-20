@@ -5,15 +5,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f5f7fa",
-      }}
-    >
+    <div style={{
+        maxWidth: "800px",
+        margin: "0 auto",
+        padding: "40px 24px",
+        color: "#1F2937",
+        lineHeight: 1.7,
+      }}>
+      <h1 style={{
+          fontSize: "32px",
+          fontWeight: 700,
+          marginBottom: "2px",
+          WebkitBackgroundClip: "text",
+        }}>WORD to PDF Converter</h1>
+        <p style={{fontSize: "24px", marginTop: "0"}}>Convert your WORD to PDF documents with incredible accuracy.</p>
       <div
         style={{
           width: "100%",
@@ -21,15 +26,18 @@ export default function LoginPage() {
           padding: "40px 32px",
           borderRadius: 16,
           background: "white",
-          boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
+          boxShadow: "4px 8px 20px rgba(0,0,0,0.08)",
           textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "8px auto",
         }}
       >
         <h1
           style={{
             fontSize: 28,
             fontWeight: 700,
-            marginBottom: 12,
+            marginBottom: 6,
             color: "#111827",
           }}
         >

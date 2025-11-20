@@ -1,16 +1,14 @@
-export default function Footer() {
+function Footer() {
   return (
-    <footer
+    <footer 
       style={{
-        marginTop: "20px",
-        padding: "20px 0",
-        textAlign: "center",
-        fontSize: "14px",
-        color: "#6B7280", // gray-500
-        background: "white",
+        padding: "20px",
+        background: "#111",
+        color: "white",
+        textAlign: "center"
       }}
     >
-      <div
+        <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -37,10 +35,9 @@ export default function Footer() {
           Privacy Policy
         </a>
       </div>
-
-      <p style={{ marginTop: "10px" }}>
-        © {new Date().getFullYear()} FilesPlay. All rights reserved.
-      </p>
+      © {new Date().getFullYear()} Files Play — All Rights Reserved
     </footer>
   );
 }
+
+export default Footer;

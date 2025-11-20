@@ -1,3 +1,4 @@
+
 export default function PrivacyPolicy() {
   return (
     <div
@@ -15,9 +16,7 @@ export default function PrivacyPolicy() {
           fontSize: "32px",
           fontWeight: 700,
           marginBottom: "24px",
-          background: "linear-gradient(to right, #6366F1, #8B5CF6)",
           WebkitBackgroundClip: "text",
-          color: "transparent",
         }}
       >
         Privacy Policy
@@ -59,7 +58,7 @@ export default function PrivacyPolicy() {
         <h3 style={sub}>2.2 File Uploads</h3>
         <p style={p}>
           When you upload files for conversion, they are processed temporarily on our
-          secure server. Files are **automatically deleted** after conversion and never
+          secure server. Files are <b>automatically deleted</b> after conversion and never
           stored permanently.
         </p>
 
@@ -88,9 +87,9 @@ export default function PrivacyPolicy() {
         <h2 style={title}>4. File Processing & Security</h2>
         <ul style={ul}>
           <li>Files are processed securely inside temporary storage.</li>
-          <li>Files are **never analyzed, viewed, or manually accessed**.</li>
-          <li>Files are **auto-deleted immediately after conversion**.</li>
-          <li>Your files are **never shared with third parties**.</li>
+          <li>Files are <b>never analyzed, viewed, or manually accessed</b>.</li>
+          <li>Files are <b>auto-deleted immediately after conversion</b>.</li>
+          <li>Your files are <b>never shared with third parties</b>.</li>
         </ul>
 
         {/* Section 5 */}
@@ -109,7 +108,7 @@ export default function PrivacyPolicy() {
         {/* Section 6 */}
         <h2 style={title}>6. Cookies & Local Storage</h2>
         <p style={p}>
-          We use local storage/cookies **only to store login tokens**.  
+          We use local storage/cookies <b>only to store login tokens</b>.  
           We do not use tracking cookies without consent.
         </p>
 
