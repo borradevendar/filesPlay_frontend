@@ -18,11 +18,11 @@ useEffect(() => {
   const path = window.location.pathname;
 
   const init = async () => {
-    const access = getAccessToken();
-    const refresh = getRefreshToken();
+    const accessToken = getAccessToken();
+    const refreshToken = getRefreshToken();
     const storedUser = getUser();
 
-    if (access) {
+    if (accessToken) {
       setUser(storedUser);
       setLoading(false);
       return;
@@ -31,12 +31,12 @@ useEffect(() => {
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/refresh`, {
         userId: storedUser.id,
-        refreshToken: refresh,
+        refreshToken: refreshToken,
       });
 
       setTokens({
-        accessToken: res.data.access,
-        refreshToken: res.data.refresh,
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
         user: storedUser,
       });
 

@@ -1,7 +1,11 @@
 // src/pages/Dashboard.tsx
 import { useEffect, useState, useRef } from "react";
+import { toast } from "react-toastify";
+
 import api from "../services/api";
 import { getUser } from "../services/authService";
+
+import Button from "../common/Button";
 
 export default function Dashboard() {
   const [profile, setProfile] = useState<any>(null);
@@ -59,6 +63,7 @@ export default function Dashboard() {
       link.download = `${file.name.replace(/\.[^/.]+$/, "")}.pdf`;
       link.click();
 
+      toast.success("Your PDF has been downloaded successfully!");
     } catch (err) {
       setError("Conversion failed. Try again.");
     } finally {
@@ -87,7 +92,9 @@ export default function Dashboard() {
       >
         {/* Profile Header */}
         {profile && (
-          <div style={{ display: "flex", alignItems: "center", marginBottom: 30 }}>
+          <div
+            style={{ display: "flex", alignItems: "center", marginBottom: 30 }}
+          >
             {profile.avatarUrl ? (
               <img
                 src={profile.avatarUrl}
@@ -114,19 +121,25 @@ export default function Dashboard() {
                 Welcome, {profile.name}
               </p>
             </div>
-          </div>  
+          </div>
         )}
 
         {/* Upload Card */}
         <div>
-          <h1 style={{
-          fontSize: "32px",
-          fontWeight: 700,
-          marginBottom: "8px",
-          WebkitBackgroundClip: "text",
-          color: "#1F2937",
-        }}>WORD to PDF Converter</h1>
-          <p style={{fontSize: "14px", marginBottom: "12px"}}>Convert your WORD documents to PDF files with incredible accuracy.</p>
+          <h1
+            style={{
+              fontSize: "32px",
+              fontWeight: 700,
+              marginBottom: "8px",
+              WebkitBackgroundClip: "text",
+              color: "#1F2937",
+            }}
+          >
+            WORD to PDF Converter
+          </h1>
+          <p style={{ fontSize: "14px", marginBottom: "12px" }}>
+            Convert your WORD documents to PDF files with incredible accuracy.
+          </p>
 
           {/* Drag & Drop box */}
           <div
@@ -139,6 +152,7 @@ export default function Dashboard() {
               border: "2px dashed #cbd5e1",
               padding: 50,
               textAlign: "center",
+              marginBottom: 20,
               borderRadius: 14,
               background: dragActive ? "#f1f5f9" : "#f8fafc",
               transition: "0.2s",
@@ -146,7 +160,9 @@ export default function Dashboard() {
             }}
           >
             <p style={{ fontSize: 16, color: "#475569" }}>
-              {dragActive ? "Drop your file here" : "Drag & drop your Word file here"}
+              {dragActive
+                ? "Drop your file here"
+                : "Drag & drop your Word file here"}
             </p>
             <p style={{ color: "#94a3b8", fontSize: 14 }}>or click to browse</p>
 
@@ -164,6 +180,7 @@ export default function Dashboard() {
             <div
               style={{
                 marginTop: 20,
+                marginBottom: 10,
                 padding: 14,
                 background: "#f1f5f9",
                 borderRadius: 8,
@@ -176,29 +193,19 @@ export default function Dashboard() {
           )}
 
           {/* Error */}
-          {error && (
-            <p style={{ color: "red", marginTop: 10 }}>{error}</p>
-          )}
+          {error && <p style={{ color: "red", marginTop: 10 }}>{error}</p>}
 
           {/* Convert Button */}
-          <button
+          <Button
             onClick={uploadFile}
-            disabled={uploading}
-            style={{
-              marginTop: 22,
-              width: "100%",
-              padding: "14px 0",
-              background: "#000000",
-              color: "white",
-              fontSize: 16,
-              border: "none",
-              borderRadius: 10,
-              cursor: uploading ? "not-allowed" : "pointer",
-              transition: "0.2s",
-            }}
-          >
-            {uploading ? "Converting..." : "Convert to PDF"}
-          </button>
+            isLoading={uploading}
+            color="black"
+            size="lg"
+            className="w-full mt-6"
+          > 
+            Convert to PDF
+          </Button>
+
         </div>
       </div>
     </div>

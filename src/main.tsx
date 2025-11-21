@@ -13,6 +13,8 @@ import About from "./pages/About";
 import Creators from "./pages/Creators";
 import AuthProvider from "./context/AuthContext";
 
+import "./index.css";
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>

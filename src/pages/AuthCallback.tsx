@@ -1,16 +1,17 @@
 // src/pages/AuthCallback.tsx
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import { setTokens } from "../services/authService";
+import { setTokens, clearAuth } from "../services/authService";
+import { AuthContext } from "../context/AuthContext";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
 
   useEffect(() => {
     async function handleAuth() {
       const url = new URL(window.location.href);
-
       const accessToken = url.searchParams.get("accessToken");
       const refreshToken = url.searchParams.get("refreshToken");
 
@@ -19,30 +20,26 @@ export default function AuthCallback() {
         return;
       }
 
-      // temporary save
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+      // 1) persist tokens so api interceptor works
+      setTokens({ accessToken, refreshToken, user: null });
 
       try {
-        // Fetch user profile using token
+        // 2) fetch user (now will include Authorization header)
         const res = await api.get("/auth/profile");
-
         const user = res.data;
-        
-        setTokens({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          user,
-        });
+
+        // 3) update localStorage + context
+        setTokens({ accessToken, refreshToken, user });
+        setUser(user); // update AuthContext immediately
 
         navigate("/dashboard");
-      } catch {
+      } catch (err) {
+        clearAuth();
         navigate("/");
       }
     }
 
     handleAuth();
   }, []);
-
-  return <p>Processing login...</p>;
+  return null;
 }

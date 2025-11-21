@@ -27,7 +27,7 @@ api.interceptors.response.use(
         return;
       }
 
-      const res = await axios.post("https://filesplaybackend-production.up.railway.app/auth/refresh", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/refresh`, {
         userId: user.id,
         refreshToken,
       });

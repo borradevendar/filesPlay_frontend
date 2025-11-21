@@ -1,3 +1,6 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -25,6 +28,7 @@ function App() {
       >
         <Outlet />
       </main>
+      <ToastContainer/>
 
       {/* Sticky Footer */}
       <div style={{ position: "sticky", bottom: 0, zIndex: 1000 }}>
