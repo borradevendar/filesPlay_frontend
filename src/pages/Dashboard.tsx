@@ -126,6 +126,7 @@ export default function Dashboard() {
 
         {/* Upload Card */}
         <div>
+          <div className="flex flex-col items-center">
           <h1
             style={{
               fontSize: "32px",
@@ -137,10 +138,10 @@ export default function Dashboard() {
           >
             WORD to PDF Converter
           </h1>
-          <p style={{ fontSize: "14px", marginBottom: "12px" }}>
+          <p style={{ fontSize: "14px", marginBottom: "12px", color: "#1F2937", }}>
             Convert your WORD documents to PDF files with incredible accuracy.
           </p>
-
+            </div>
           {/* Drag & Drop box */}
           <div
             onDragEnter={() => setDragActive(true)}

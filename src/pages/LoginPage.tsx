@@ -6,12 +6,13 @@ export default function LoginPage() {
 
   return (
     <div style={{
-        maxWidth: "800px",
+        maxWidth: "900px",
         margin: "0 auto",
         padding: "40px 24px",
         color: "#1F2937",
         lineHeight: 1.7,
       }}>
+        <div className="flex flex-col items-center">
       <h1 style={{
           fontSize: "32px",
           fontWeight: 700,
@@ -19,6 +20,7 @@ export default function LoginPage() {
           WebkitBackgroundClip: "text",
         }}>WORD to PDF Converter</h1>
         <p style={{fontSize: "24px", marginTop: "0"}}>Convert your WORD to PDF documents with incredible accuracy.</p>
+        </div>
       <div
         style={{
           width: "100%",
@@ -30,7 +32,7 @@ export default function LoginPage() {
           textAlign: "center",
           justifyContent: "center",
           alignItems: "center",
-          margin: "8px auto",
+          margin: "16px auto",
         }}
       >
         <h1
