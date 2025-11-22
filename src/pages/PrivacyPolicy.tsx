@@ -1,195 +1,147 @@
+import React, { useState } from "react";
 
-export default function PrivacyPolicy() {
-  return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "0 auto",
-        padding: "40px 24px",
-        color: "#1F2937",
-        lineHeight: 1.7,
-      }}
-    >
-      {/* Title */}
-      <h1
-        style={{
-          fontSize: "32px",
-          fontWeight: 700,
-          marginBottom: "24px",
-          WebkitBackgroundClip: "text",
-        }}
+export default function PrivacyPolicyPage() {
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const fileName = "privacy policy.docx";
+
+  const toggle = (key: string) =>
+    setOpenSection(openSection === key ? null : key);
+
+  const Section: React.FC<{
+    id: string;
+    title: string;
+    children: React.ReactNode;
+  }> = ({ id, title, children }) => (
+    <div className="bg-white dark:bg-slate-900 shadow-sm rounded-2xl p-6 border border-slate-100 dark:border-slate-800">
+      <button
+        className="w-full flex items-start justify-between gap-4"
+        onClick={() => toggle(id)}
+        aria-expanded={openSection === id}
       >
-        Privacy Policy
-      </h1>
+        <div className="text-left">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
+        </div>
+        <div className="flex items-center">
+          <svg
+            className={`w-5 h-5 transform transition-transform duration-200 ${
+              openSection === id ? "rotate-180" : "rotate-0"
+            } text-slate-400`}
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path d="M6 8l4 4 4-4" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </button>
 
-      {/* Card */}
       <div
-        style={{
-          background: "white",
-          padding: "28px",
-          borderRadius: "16px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-          border: "1px solid #E5E7EB",
-        }}
+        className={`mt-4 text-sm leading-7 text-slate-700 dark:text-slate-300 transition-all duration-200 overflow-hidden ${
+          openSection === id ? "max-h-[1000px] print:max-h-full" : "max-h-0 print:max-h-full"
+        }`}
       >
-        <p style={p}>
-          This Privacy Policy explains how FilesPlay (“we”, “our”, “us”) collects,
-          processes, and protects your information when you use our services.
-        </p>
+        {children}
+      </div>
+    </div>
+  );
 
-        {/* Section 1 */}
-        <h2 style={title}>1. Overview</h2>
-        <p style={p}>
-          FilesPlay is designed with privacy and security as core principles. We only
-          collect the minimum amount of information required to operate our services,
-          and we do not sell your data.
-        </p>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
+          <div>
+            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-slate-100">Privacy Policy For Files Play</h1>
+          </div>
 
-        {/* Section 2 */}
-        <h2 style={title}>2. Information We Collect</h2>
+          <div className="flex gap-3">
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:shadow-sm transition"
+            >
+              Print
+            </button>
+          </div>
+        </header>
 
-        <h3 style={sub}>2.1 Account Information</h3>
-        <ul style={ul}>
-          <li>Name (from Google OAuth)</li>
-          <li>Email address</li>
-          <li>Profile image (avatar)</li>
-        </ul>
+        <div className="grid gap-6">
+          <Section id="overview" title="Overview">
+            <p>
+              Files Play respects your privacy. This policy explains the types of information we collect, how we use
+              it, and the choices you have. It is written for readability and aligned with app-store requirements.
+            </p>
+          </Section>
 
-        <h3 style={sub}>2.2 File Uploads</h3>
-        <p style={p}>
-          When you upload files for conversion, they are processed temporarily on our
-          secure server. Files are <b>automatically deleted</b> after conversion and never
-          stored permanently.
-        </p>
+          <Section id="collection" title="Information We Collect">
+            <ul className="list-disc ml-5">
+              <li>
+                <strong>Information you provide:</strong> Email (collected automatically when you sign in using Google/GitHub/Apple login).
+              </li>
+              <li>
+                <strong>Device & usage data:</strong> Device model, OS, app usage, and crash logs to improve the app.
+              </li>
+              <li>
+                <strong>Files you upload:</strong> Files are processed temporarily for conversion and deleted after processing.
+              </li>
+            </ul>
+            <p className="mt-3 text-xs text-slate-500">Files Play does <strong>not</strong> collect payments, contacts, calendars, or location data.</p>
+          </Section>
 
-        <h3 style={sub}>2.3 Usage & Analytics Data</h3>
-        <p style={p}>We may collect anonymized usage metrics such as:</p>
-        <ul style={ul}>
-          <li>Pages visited</li>
-          <li>Conversion types used</li>
-          <li>Approximate device information (browser, OS)</li>
-        </ul>
+          <Section id="use" title="How We Use Information">
+            <p>
+              We use collected information to provide and improve the app, respond to support requests, and to maintain
+              security and performance. We do not use personal data for targeted advertising without explicit consent.
+            </p>
+          </Section>
 
-        <p style={note}>
-          No personally identifiable analytics data is collected without your consent.
-        </p>
+          <Section id="files" title="File Handling & Storage">
+            <p>
+              Files uploaded for conversion are processed securely and removed automatically after conversion. We do not
+              retain or share the content of files for any purpose other than completing the conversion you requested.
+            </p>
+          </Section>
 
-        {/* Section 3 */}
-        <h2 style={title}>3. How We Use Your Information</h2>
-        <ul style={ul}>
-          <li>To operate and improve our file conversion services</li>
-          <li>To authenticate your account via Google OAuth</li>
-          <li>To maintain login sessions</li>
-          <li>To detect misuse or security threats</li>
-        </ul>
+          <Section id="sharing" title="Information Sharing">
+            <p>
+              We do not sell your data. We may share limited technical information with trusted third-party services
+              such as crash reporters or cloud providers, under strict confidentiality obligations.
+            </p>
+          </Section>
 
-        {/* Section 4 */}
-        <h2 style={title}>4. File Processing & Security</h2>
-        <ul style={ul}>
-          <li>Files are processed securely inside temporary storage.</li>
-          <li>Files are <b>never analyzed, viewed, or manually accessed</b>.</li>
-          <li>Files are <b>auto-deleted immediately after conversion</b>.</li>
-          <li>Your files are <b>never shared with third parties</b>.</li>
-        </ul>
+          <Section id="security" title="Security">
+            <p>
+              We implement reasonable measures such as encrypted communications, access controls, and automated file
+              deletion to protect your information.
+            </p>
+          </Section>
 
-        {/* Section 5 */}
-        <h2 style={title}>5. Third-Party Services</h2>
-        <p style={p}>We may use the following services:</p>
-        <ul style={ul}>
-          <li>Google OAuth (for login)</li>
-          <li>Google Analytics (anonymous usage stats)</li>
-          <li>Google AdSense (optional advertising)</li>
-        </ul>
-        <p style={p}>
-          These services operate under their own privacy policies and may collect
-          certain data independently.
-        </p>
+          <Section id="rights" title="Your Rights">
+            <p>
+              You may request access, correction, or deletion of your data. Contact us at the email below to exercise
+              these rights.
+            </p>
+          </Section>
 
-        {/* Section 6 */}
-        <h2 style={title}>6. Cookies & Local Storage</h2>
-        <p style={p}>
-          We use local storage/cookies <b>only to store login tokens</b>.  
-          We do not use tracking cookies without consent.
-        </p>
+          <Section id="children" title="Children & Eligibility">
+            <p>
+              Files Play is not intended for children under 13. We do not knowingly collect personal information from
+              children.
+            </p>
+          </Section>
 
-        {/* Section 7 */}
-        <h2 style={title}>7. Data Retention</h2>
-        <ul style={ul}>
-          <li>OAuth profile data is retained until account deletion.</li>
-          <li>Temporary files are deleted automatically after conversion.</li>
-          <li>Analytics data may be retained in anonymized form.</li>
-        </ul>
+          <Section id="changes" title="Changes to this Policy">
+            <p>
+              We may update this policy from time to time. We will post changes in the app and update the effective
+              date. Substantive changes will be announced via the app or email when possible.
+            </p>
+          </Section>
 
-        {/* Section 8 */}
-        <h2 style={title}>8. Your Rights</h2>
-        <p style={p}>Depending on your location, you may have the right to:</p>
-        <ul style={ul}>
-          <li>Request deletion of your account</li>
-          <li>Request deletion of stored login data</li>
-          <li>Opt out of analytics and ads</li>
-        </ul>
-
-        {/* Section 9 */}
-        <h2 style={title}>9. Children's Privacy</h2>
-        <p style={p}>
-          FilesPlay does not knowingly collect information from individuals under 13
-          years of age.
-        </p>
-
-        {/* Section 10 */}
-        <h2 style={title}>10. Updates to This Policy</h2>
-        <p style={p}>
-          This Privacy Policy may be updated to reflect changes in our services or
-          legal obligations. Updates will be posted on this page.
-        </p>
-
-        {/* Section 11 */}
-        <h2 style={title}>11. Contact</h2>
-        <p style={p}>
-          For questions, please contact us at:  
-          <br />
-          <strong>filesplay.contact@gmail.com</strong>
-        </p>
+          <Section id="contact" title="Contact Us">
+            <p>
+              For questions or requests, reach out to us at:
+            </p>
+            <p className="mt-2 text-sm font-medium">filesplay.contact@gmail.com</p>
+          </Section>
+        </div>
       </div>
     </div>
   );
 }
-
-/* Shared Inline Styles */
-
-const title = {
-  fontSize: "22px",
-  fontWeight: 600,
-  marginTop: "28px",
-  marginBottom: "12px",
-  color: "#374151",
-};
-
-const sub = {
-  fontSize: "18px",
-  fontWeight: 500,
-  marginTop: "20px",
-  marginBottom: "8px",
-  color: "#4B5563",
-};
-
-const p: React.CSSProperties = {
-  marginBottom: "16px",
-  fontSize: "16px",
-};
-
-const ul: React.CSSProperties = {
-  paddingLeft: "20px",
-  marginBottom: "16px",
-  fontSize: "16px",
-  listStyle: "disc",
-};
-
-const note: React.CSSProperties = {
-  background: "#F3F4F6",
-  padding: "12px",
-  borderRadius: "8px",
-  fontSize: "15px",
-  marginBottom: "16px",
-  color: "#374151",
-};
