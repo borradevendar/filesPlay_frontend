@@ -1,104 +1,66 @@
-// src/pages/LoginPage.tsx
-export default function LoginPage() {
-  const login = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL}`;
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+
+export default function LandingPage() {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    if (user) navigate("/dashboard");
+    else window.location.href = import.meta.env.VITE_API_URL;
   };
 
   return (
-    <div style={{
-        maxWidth: "900px",
-        margin: "0 auto",
-        padding: "40px 24px",
-        color: "#1F2937",
-        lineHeight: 1.7,
-      }}>
-        <div className="flex flex-col items-center">
-      <h1 style={{
-          fontSize: "32px",
-          fontWeight: 700,
-          marginBottom: "2px",
-          WebkitBackgroundClip: "text",
-        }}>WORD to PDF Converter</h1>
-        <p style={{fontSize: "24px", marginTop: "0"}}>Convert your WORD to PDF documents with incredible accuracy.</p>
-        </div>
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 380,
-          padding: "40px 32px",
-          borderRadius: 16,
-          background: "white",
-          boxShadow: "4px 8px 20px rgba(0,0,0,0.08)",
-          textAlign: "center",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "16px auto",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: 28,
-            fontWeight: 700,
-            marginBottom: 6,
-            color: "#111827",
-          }}
-        >
-          FilesPlay
+    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white flex flex-col items-center px-6">
+
+      {/* Hero Section */}
+      <div className="max-w-3xl text-center mt-24">
+        <h1 className="text-4xl sm:text-6xl font-extrabold mb-6 leading-tight">
+          Organize, Convert & Manage Your Files <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+            Faster Than Ever
+          </span>
         </h1>
 
-        <p
-          style={{
-            color: "#6B7280",
-            fontSize: 15,
-            marginBottom: 28,
-          }}
-        >
-          Sign in to continue
+        <p className="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto mb-10">
+          FilesPlay helps you convert documents, manage uploads, and keep everything in one simple, efficient workspace.
         </p>
 
         <button
-          onClick={login}
-          style={{
-            width: "100%",
-            padding: "12px 16px",
-            borderRadius: 8,
-            border: "1px solid #d1d5db",
-            background: "white",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-            cursor: "pointer",
-            fontSize: 15,
-            fontWeight: 500,
-            color: "#374151",
-            transition: "0.2s",
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = "#f9fafb";
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = "white";
-          }}
+          onClick={handleGetStarted}
+          className="px-8 py-3 bg-white text-black font-semibold rounded-xl shadow-md hover:bg-gray-200 transition"
         >
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-            style={{ width: 20, height: 20 }}
-          />
-          Login with Google
+          {user ? "Go to Dashboard" : "Get Started"}
         </button>
-
-        <p
-          style={{
-            marginTop: 24,
-            fontSize: 13,
-            color: "#9CA3AF",
-          }}
-        >
-          Your files, your control.
-        </p>
       </div>
+
+      {/* Feature Section */}
+      <div className="mt-24 grid grid-cols-1 sm:grid-cols-3 gap-10 max-w-5xl w-full text-center mb-12">
+
+        <div className="p-6 bg-gray-800/40 rounded-2xl border border-gray-700 hover:border-gray-500 transition">
+          <h3 className="text-xl font-semibold mb-3">Lightning Fast</h3>
+          <p className="text-gray-400 text-sm">
+            Convert and manage files instantly with our optimized processing engine.
+          </p>
+        </div>
+
+        <div className="p-6 bg-gray-800/40 rounded-2xl border border-gray-700 hover:border-gray-500 transition">
+          <h3 className="text-xl font-semibold mb-3">Secure Storage</h3>
+          <p className="text-gray-400 text-sm">
+            Your files stay private with secure authentication and encrypted upload handling.
+          </p>
+        </div>
+
+        <div className="p-6 bg-gray-800/40 rounded-2xl border border-gray-700 hover:border-gray-500 transition">
+          <h3 className="text-xl font-semibold mb-3">Universal Formats</h3>
+          <p className="text-gray-400 text-sm">
+            Convert between PDF, DOCX, Images, ZIP and many more formats seamlessly.
+          </p>
+        </div>
+
+      </div>
+
     </div>
   );
 }

@@ -12,6 +12,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import About from "./pages/About";
 import Creators from "./pages/Creators";
 import AuthProvider from "./context/AuthContext";
+import PublicRoute from "./utils/PublicRoute";
 
 import "./index.css";
 
@@ -21,7 +22,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <AuthProvider>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route index element={<LoginPage />} />
+          <Route
+  index
+  element={
+    <PublicRoute>
+      <LoginPage />
+    </PublicRoute>
+  }
+/>
+
             <Route path="auth/callback" element={<AuthCallback />} />
             <Route
               path="dashboard"

@@ -22,3 +22,17 @@ export const clearAuth = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("user");
 };
+
+export function logout() {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+
+  return true;
+}
+
+export function getStoredUser() {
+  const user = localStorage.getItem("user");
+  return user ? JSON.parse(user) : null;
+}
+
